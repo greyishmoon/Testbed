@@ -6,6 +6,8 @@ import com.gard.testbed.engine.ActivityManager;
 /**
  * Created by Chris on 14/02/2016.
  */
+
+// TODO : Equipment and Ingredients are almost the same. Refactor to 1 class.
 public class EquipmentTaskState implements TaskState {
 
     // Store data object for this task
