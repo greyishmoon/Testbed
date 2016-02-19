@@ -1,32 +1,31 @@
 package com.gard.testbed.helpers;
 
-import com.gard.testbed.activities.Activity;
-import com.gard.testbed.activities.Item;
-import com.gard.testbed.activities.Task;
-import com.gard.testbed.activities.TaskEntity;
+import com.gard.testbed.engine.activities.Activity;
+import com.gard.testbed.abstractions.TaskEntity;
 
 /**
- * Created by Chris on 15/02/2016.
+ * Created by Chris on 15/02/2016..
  */
+
 public class ActivityFactory {
 
     // Temp method to manually create activity for testing
     public static Activity newTestOmeletteActivity(){
-        Activity testActivity= new Activity("Cook Omelette");
+        Activity testActivity = new Activity("Cook Omelette", "Instruction / overview text");
 
         // Add 2 tasks with items to collect
-        TaskEntity ingredientsTask = testActivity.addTask("Collect Ingredients");
-        ingredientsTask.addItem("Eggs");
-        ingredientsTask.addItem("Milk");
-        ingredientsTask.addItem("Butter");
-        ingredientsTask.addItem("Salt");
+        TaskEntity ingredientsTask = testActivity.addTask("Collect Ingredients", "Collect 4 ingredients");
+        ingredientsTask.addTask("Eggs", "Collect 3 eggs");
+        ingredientsTask.addTask("Milk", "Collect milk");
+        ingredientsTask.addTask("Butter", "Collect butter");
+        ingredientsTask.addTask("Salt", "Collect salt");
 
-        TaskEntity equipmentTask = testActivity.addTask("Collect Equipment");
-        equipmentTask.addItem("Bowl");
-        equipmentTask.addItem("Fork");
-        equipmentTask.addItem("Frying pan");
-        equipmentTask.addItem("Knife");
-        equipmentTask.addItem("Spatula");
+        TaskEntity equipmentTask = testActivity.addTask("Collect Equipment", "Collect 5 items of equipment");
+        equipmentTask.addTask("Bowl", "Get bowl");
+        equipmentTask.addTask("Fork", "Get fork");
+        equipmentTask.addTask("Frying pan", "Get frying pan");
+        equipmentTask.addTask("Knife", "Get knife");
+        equipmentTask.addTask("Spatula", "Get spatula");
 
 
 

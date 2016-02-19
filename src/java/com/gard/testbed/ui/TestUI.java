@@ -1,19 +1,20 @@
-package com.gard.testbed.testui;
+package com.gard.testbed.ui;
 
 import com.gard.testbed.engine.ActivityManager;
 
 import java.util.Scanner;
 
 /**
- * Created by Chris on 14/02/2016.
+ * Created by Chris on 14/02/2016..
  */
-public class TestUI {
+
+public class TestUi {
     // Store activityManager to send events
     ActivityManager activityManager;
     Scanner scanner = new Scanner(System.in);
     boolean retry = true;
 
-    public TestUI(ActivityManager activityManager) {
+    public TestUi(ActivityManager activityManager) {
         this.activityManager = activityManager;
     }
 

@@ -1,20 +1,20 @@
 package com.gard.testbed.statemachine;
 
-import com.gard.testbed.activities.TaskEntity;
-import com.gard.testbed.activities.TaskEntity.CompletedStatus;
+import com.gard.testbed.abstractions.TaskEntity;
+import com.gard.testbed.abstractions.TaskEntity.CompletedStatus;
 import com.gard.testbed.engine.ActivityManager;
 
 /**
- * Created by Chris on 14/02/2016.
+ * Created by Chris on 14/02/2016..
  */
-public class IngredientsTaskState implements TaskState {
+public class IngredientsTaskStateOLD implements TaskState {
 
     // Store data object for this task
     TaskEntity taskData;
 
-    public IngredientsTaskState(ActivityManager activityManager, ActivityContext context) {
+    public IngredientsTaskStateOLD(ActivityManager activityManager, ActivityContext context) {
         // hard code link to tasks data object
-        taskData = activityManager.getActivity().getTaskEntity("Collect Ingredients");
+        taskData = activityManager.getActivity().getTask("Collect Ingredients");
         System.out.println("(STATE CHANGE to: " + taskData.getName() + ")");
         // completed check to imediaely swap back to other state if this one is already completed
         checkCompleted(context);
@@ -58,12 +58,12 @@ public class IngredientsTaskState implements TaskState {
     // If other activities outstanding, swap to that state
     // If no activities outstanding - activity complete
     private void checkCompleted(ActivityContext context) {
-        if (taskData.isComplete()) {
+        if (taskData.isCompleted()) {
             System.out.println("Notification: We have collected all the ingredients");
             // Clear eventStack in context
             context.popEventStack();
             // Check other tasks in activity ** TODO needs refining to just check other tasks at same level as this one
-            if (context.getActivityManager().getActivity().isComplete()) {
+            if (context.getActivityManager().getActivity().isCompleted()) {
                 // ACTIVITY COMPLETED!! notify and exit run
                 System.out.println("\nACTIVITY COMPLETE - we've finished everything");
                 System.exit(1);

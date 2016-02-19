@@ -1,20 +1,19 @@
 package com.gard.testbed.engine;
 
-import com.gard.testbed.activities.Activity;
+import com.gard.testbed.engine.activities.Activity;
 import com.gard.testbed.helpers.ActivityFactory;
 import com.gard.testbed.statemachine.ActivityContext;
-import com.gard.testbed.statemachine.EquipmentTaskState;
 import com.gard.testbed.statemachine.IngredientsTaskState;
 
 /**
- * Created by Chris on 14/02/2016.
+ * Created by Chris on 14/02/2016..
  */
 public class ActivityManager {
 
-    // Holds current activity
+    // Hs current activity
     private Activity activity;
     // Activity context - current task state
-    public ActivityContext activityContext = new ActivityContext(this);         //TODO - change back to private
+    private ActivityContext activityContext = new ActivityContext(this);
 
     // Loads activity - for now parameterless set to load 'omelette collection' activity (two states only)
     public void loadActivity(){

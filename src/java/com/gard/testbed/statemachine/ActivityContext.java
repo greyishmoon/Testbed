@@ -1,11 +1,9 @@
 package com.gard.testbed.statemachine;
 
-import com.gard.testbed.activities.Activity;
-import com.gard.testbed.activities.TaskEntity;
 import com.gard.testbed.engine.ActivityManager;
 
 /**
- * Created by Chris on 14/02/2016.
+ * Created by Chris on 14/02/2016..
  */
 public class ActivityContext {
 
@@ -26,6 +24,7 @@ public class ActivityContext {
 
     public void setState(TaskState state){
         this.state = state;
+        System.out.println("(STATE CHANGE to: " + state.getTaskData().getName() + ")");
         processEventStack();
     }
 
@@ -45,7 +44,7 @@ public class ActivityContext {
 //            activityManager.complete(eventStack);
 
 //            // Only process if task is uncompleted
-            if (!state.getTaskData().isComplete()) {
+            if (!state.getTaskData().isCompleted()) {
                 activityManager.complete(popEventStack());
             }
         }
