@@ -58,6 +58,7 @@ public class Activity implements TaskEntity{
         }else{
             TaskEntity task = null;
             for (Map.Entry<String, TaskEntity> entry: taskList.entrySet()) {
+
                 task = entry.getValue().getTaskEntity(taskName);
                 if (task != null) {
                     return task;

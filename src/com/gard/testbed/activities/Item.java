@@ -5,17 +5,18 @@ package com.gard.testbed.activities;
  */
 public class Item implements TaskEntity {
 
-    private String name;
+    private final String name;
     private boolean completed = false;
 
     public Item(String name) {
         this.name = name;
     }
 
-    @Override
+    /*@Override
     public TaskEntity addTask(String name) {
         return null;
-    }   //TODO Add exception - cant add task to entity
+    }*/
+    //TODO Add exception - cant add task to entity * Do not create method like this.... if you see them- wrong interface
 
     @Override
     public void addItem(String name) {    }                   //TODO Add exception - cant add item to item
@@ -44,7 +45,8 @@ public class Item implements TaskEntity {
     }
 
     // As no task list to check returns this object if taskName matches
-    @Override
+    //@Override
+    // TODO why this method here? I have a method to check the name
     public TaskEntity getTaskEntity(String taskName) {
         if (name.equals(taskName)) {
             return this;

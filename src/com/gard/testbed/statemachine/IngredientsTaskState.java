@@ -33,7 +33,7 @@ public class IngredientsTaskState implements TaskState {
 
         // Try to complete sub-task in current task
         CompletedStatus result =  taskData.complete(taskEntityName);
-
+    //TODO try to call UI instead of print out
         switch (result) {
             case MARKEDCOMPLETED:
                 System.out.println("Action: " + taskEntityName + " marked collected");

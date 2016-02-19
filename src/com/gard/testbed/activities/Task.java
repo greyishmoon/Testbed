@@ -9,10 +9,11 @@ import java.util.Map;
  * Created by Chris on 15/02/2016.
  */
 public class Task implements TaskEntity {
-
+    /*TODO : Keep data and logic separated - I know is not proper OO but can be useful*/
     private String name;
     boolean completed = false;
     // Map (LinkedHashMap) of sub-tasks <task name, Task>
+    /* TODO : why you need this? */
     Map<String, TaskEntity> taskList = new LinkedHashMap<>();
 
 
@@ -21,12 +22,13 @@ public class Task implements TaskEntity {
     }
 
     // Add task list with key set as task name
-    @Override
+    // TODO removed no one is using it
+    /*@Override
     public TaskEntity addTask(String name){
         TaskEntity newTask = new Task(name);
         taskList.put(name, newTask);
         return newTask;
-    }
+    }*/
 
     // Add single item to task list
     @Override
@@ -76,8 +78,10 @@ public class Task implements TaskEntity {
 
     // If this taskName, check sub-tasks for completion (then set accordingly)
     // Otherwise pass complete message on to appropriate sub-task if present in taskList
+    // TODO : split the composite from the component - makes everything more clear
     @Override
     public CompletedStatus complete(String taskName) {
+        // TODO : this is a code smell
         if (name.equals(taskName)) {
             if (completed) {
                 return CompletedStatus.ALREADYCOMPLETED;
@@ -98,6 +102,7 @@ public class Task implements TaskEntity {
 
     // Forces check on sub-task completion status - this task only marked complete when all sub-tasks complete
     @Override
+    // TODO refactor : you are relying on side effects.
     public boolean isComplete() {
         // Try to complete task - forces check on sub-tasks
         complete(name);
