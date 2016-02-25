@@ -1,10 +1,8 @@
 package com.gard.testbed;
 
-import com.gard.testbed.engine.ActivityManager;
 import com.gard.testbed.engine.Kernel;
 import com.gard.testbed.engine.fsm.ActivityBuilder;
 import com.gard.testbed.ui.TestSimpleFsmUi;
-import com.gard.testbed.ui.TestUi;
 
 public class Main {
 
