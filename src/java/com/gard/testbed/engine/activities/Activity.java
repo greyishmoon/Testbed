@@ -1,31 +1,38 @@
 package com.gard.testbed.engine.activities;
 
-import com.gard.testbed.abstractions.TaskEntity;
+import com.gard.testbed.abstractions.IStateProgress;
+import com.gard.testbed.abstractions.ITask;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
- * Created by Chris on 18/02/2016..
+ * Created by Chris on 23/02/2016..
  */
-public class Activity implements TaskEntity {
+public class Activity implements ITask {
 
-    private String name;
-    private String instructions = "";
-    private int	taskLevel = 0;                  // Activity is root level 0
-    private boolean completed = false;
-    private Map<String, TaskEntity> taskList = new LinkedHashMap<>();       // Holds nested sub-tasks
+    private final String name;
+    private final String instructions;
+    private List<ITask> taskList = new ArrayList<>();
 
     public Activity(String name, String instructions) {
         this.name = name;
         this.instructions = instructions;
     }
 
+    public void addTask(ITask task) {
+        taskList.add(task);
+    }
+
     @Override
-    public TaskEntity addTask(String name, String instructions) {
-        TaskEntity newTask = new TaskElement(this, name, instructions, this);
-        taskList.put(name, newTask);
-        return newTask;
+    public ITask getTask(String taskName) {
+        for (ITask task : taskList) {
+            ITask result;
+            result = task.getTask(taskName);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -39,101 +46,43 @@ public class Activity implements TaskEntity {
     }
 
     @Override
-    public int getTaskLevel() {
-        return 0;
-    }
-
-    // Checks tasks for completed and automatically completes this task if all children completed
-    @Override
-    public boolean isCompleted() {
-        if (getOutstandingTasks().isEmpty()) {
-            completed = true;
-        }
-        return completed;
+    public boolean isComposite() {
+        return true;
     }
 
     @Override
-    public Map<String, TaskEntity> getTaskList() {
-        return taskList;
+    public void complete() {
+
     }
 
     @Override
-    public TaskEntity getParentTask() {
-        return null;
+    public boolean isComplete(IStateProgress progress) {
+        return false;
     }
 
-    @Override
-    public CompletedStatus complete(String taskName) {
-        if (name.equals(taskName)) {
-            if (isCompleted()) {
-                return TaskEntity.CompletedStatus.ALREADYCOMPLETED;
-            }
-            if (getOutstandingTasks().isEmpty()) {
-                completed = true;
-                return TaskEntity.CompletedStatus.MARKEDCOMPLETED;
-            } else {
-                return TaskEntity.CompletedStatus.OUSTANDINGSUBTASKS;
-            }
+
+    // Add task to root activity
+    public void addTask(String newTaskName, String newTaskInstructions) {
+        ITask task = new Task(newTaskName, newTaskInstructions);
+        taskList.add(task);
+    }
+
+    // Add task to named task - if named task is not Composite already1, convert to CompositeTask then add new task
+    public void addTaskTo(String addToTask, String newTaskName, String newTaskInstructions) {
+        CompositeTask parentTask;
+        ITask testTask = getTask(addToTask);
+        if (!testTask.isComposite()) {
+            parentTask = new CompositeTask(testTask.getName(), testTask.getInstructions());
+            taskList.set(taskList.indexOf(testTask), parentTask);                               //TODO - solve change to composite in sub-tasks
         } else {
-            TaskEntity taskFound;
-            if ((taskFound = getTask(taskName)) != null) {
-                return taskFound.complete(taskName);
-            }
+            System.out.println(">> IN ADD TO TASK - got: " + testTask.getName());
+            parentTask = (CompositeTask) getTask(addToTask);
+            System.out.println(">> IN ADD TO TASK - got: " + parentTask.getName());
         }
-        return TaskEntity.CompletedStatus.NOTASK;
+
+        parentTask.addTask(newTaskName, newTaskInstructions);
     }
 
-    @Override
-    public boolean hasTask(String taskName) {
-        // Use getTask for iteration code
-        return getTask(taskName) != null;
-    }
 
-    @Override
-    public TaskEntity getTask(String taskName) {
-        // If task in top level...
-        if (taskList.containsKey(taskName)){
-            return taskList.get(taskName);
-            // Otherwise iterate over sub-tasks to find task
-        }else{
-            TaskEntity task;
-            for (Map.Entry<String, TaskEntity> entry: taskList.entrySet()) {
-                task = entry.getValue().getTask(taskName);
-                if (task != null) {
-                    return task;
-                }
-            }
-        }
-        // If not present in activity return null
-        return null;
-    }
 
-    @Override
-    public Map<String, TaskEntity> getOutstandingTasks() {
-        Map<String, TaskEntity> outstandingTasks = new LinkedHashMap<>();
-        for (Map.Entry<String, TaskEntity> entry: taskList.entrySet()) {
-            if (!entry.getValue().isCompleted()) {
-                outstandingTasks.put(entry.getKey(), entry.getValue());
-            }
-        }
-        return outstandingTasks;
-    }
-
-    // Set formatting for console print()
-    public void print() {
-        // Formatting for tabbing 'complete' result - 40 chars
-        String format = "%-40s%s%n";
-        String buffer = "   ";
-        print(buffer, format);
-    }
-
-    // Print activity and all sub-tasks
-    public void print(String buffer, String format){
-        System.out.printf(format, "Activity: " + name, "Completed:");
-
-        // Print all tasks and sub-tasks
-        for (Map.Entry<String, TaskEntity> entry: taskList.entrySet()) {
-            entry.getValue().print(buffer, format);
-        }
-    }
 }

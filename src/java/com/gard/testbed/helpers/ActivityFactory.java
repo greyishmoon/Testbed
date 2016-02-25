@@ -1,6 +1,6 @@
 package com.gard.testbed.helpers;
 
-import com.gard.testbed.engine.activities.Activity;
+import com.gard.testbed.engine.activities.ActivityOLD;
 import com.gard.testbed.abstractions.TaskEntity;
 
 /**
@@ -10,8 +10,8 @@ import com.gard.testbed.abstractions.TaskEntity;
 public class ActivityFactory {
 
     // Temp method to manually create activity for testing
-    public static Activity newTestOmeletteActivity(){
-        Activity testActivity = new Activity("Cook Omelette", "Instruction / overview text");
+    public static ActivityOLD newTestOmeletteActivity(){
+        ActivityOLD testActivity = new ActivityOLD("Cook Omelette", "Instruction / overview text");
 
         // Add 2 tasks with items to collect
         TaskEntity ingredientsTask = testActivity.addTask("Collect Ingredients", "Collect 4 ingredients");

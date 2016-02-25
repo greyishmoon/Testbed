@@ -2,40 +2,28 @@ package com.gard.testbed.engine.activities;
 
 import com.gard.testbed.abstractions.TaskEntity;
 
-import java.util.Map;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by Chris on 18/02/2016..
  */
-public class TaskElement implements TaskEntity {
+public class ActivityOLD implements TaskEntity {
 
-    // This task fields
     private String name;
     private String instructions = "";
-    private int	taskLevel;
+    private int	taskLevel = 0;                  // ActivityOLD is root level 0
     private boolean completed = false;
-    // Indicates if all previous tasks AT THIS LEVEL need to be completed before entering this task // TODO - Remove if not used
-    private boolean taskProgressionGate = true;
-    // Task tree fields
-    private Activity rootActivity;                          // Access to root of task tree (level 0)
     private Map<String, TaskEntity> taskList = new LinkedHashMap<>();       // Holds nested sub-tasks
-    private boolean hasSubTasks = false;                    // Set to true as soon as a task added to taskList
-    private TaskEntity parentTask;                          // Holds reference to parent of this task
 
-
-    public TaskElement(Activity activity, String name, String instructions, TaskEntity parentTask) {
-        this.rootActivity = activity;
+    public ActivityOLD(String name, String instructions) {
         this.name = name;
         this.instructions = instructions;
-        this.parentTask = parentTask;
-        taskLevel = parentTask.getTaskLevel() + 1;          // Sets task level to one higher than parent
     }
 
     @Override
     public TaskEntity addTask(String name, String instructions) {
-        hasSubTasks = true;
-        TaskEntity newTask = new TaskElement(rootActivity, name, instructions, this);
+        TaskEntity newTask = new TaskElementOLD(this, name, instructions, this);
         taskList.put(name, newTask);
         return newTask;
     }
@@ -52,9 +40,17 @@ public class TaskElement implements TaskEntity {
 
     @Override
     public int getTaskLevel() {
-        return taskLevel;
+        return 0;
     }
 
+    // Checks tasks for completed and automatically completes this task if all children completed
+    @Override
+    public boolean isCompleted() {
+        if (getOutstandingTasks().isEmpty()) {
+            completed = true;
+        }
+        return completed;
+    }
 
     @Override
     public Map<String, TaskEntity> getTaskList() {
@@ -63,19 +59,16 @@ public class TaskElement implements TaskEntity {
 
     @Override
     public TaskEntity getParentTask() {
-        return parentTask;
+        return null;
     }
 
-    // Attempts to complete this task
-    // If no children -> MARKEDCOMPLETED or ALREADYCOMPLETED
-    // If children , get task and try to complete
     @Override
     public CompletedStatus complete(String taskName) {
         if (name.equals(taskName)) {
             if (isCompleted()) {
                 return TaskEntity.CompletedStatus.ALREADYCOMPLETED;
             }
-            if (!hasSubTasks) {
+            if (getOutstandingTasks().isEmpty()) {
                 completed = true;
                 return TaskEntity.CompletedStatus.MARKEDCOMPLETED;
             } else {
@@ -90,25 +83,12 @@ public class TaskElement implements TaskEntity {
         return TaskEntity.CompletedStatus.NOTASK;
     }
 
-    // Checks sub-tasks for completed and automatically completes this task if all children completed
-    @Override
-    public boolean isCompleted() {
-        if (hasSubTasks) {
-            if (getOutstandingTasks().isEmpty()) {
-                completed = true;
-            }
-        }
-        return completed;
-    }
-
-    // Checks if task is child of this task (reflects through all sub-task levels)
     @Override
     public boolean hasTask(String taskName) {
         // Use getTask for iteration code
         return getTask(taskName) != null;
     }
 
-    // Iterate over all tasks and sub-tasks and return TaskEntity whose name matches
     @Override
     public TaskEntity getTask(String taskName) {
         // If task in top level...
@@ -139,15 +119,21 @@ public class TaskElement implements TaskEntity {
         return outstandingTasks;
     }
 
-    @Override
-    public void print(String buffer, String format) {
-        // Print task
-        System.out.printf(format, buffer + name, completed);
-        // Print any sub-tasks
-        if (taskList.size()>0){
-            for (Map.Entry<String, TaskEntity> entry: taskList.entrySet()) {
-                entry.getValue().print(buffer + "   ", format);
-            }
+    // Set formatting for console print()
+    public void print() {
+        // Formatting for tabbing 'complete' result - 40 chars
+        String format = "%-40s%s%n";
+        String buffer = "   ";
+        print(buffer, format);
+    }
+
+    // Print activity and all sub-tasks
+    public void print(String buffer, String format){
+        System.out.printf(format, "ActivityOLD: " + name, "Completed:");
+
+        // Print all tasks and sub-tasks
+        for (Map.Entry<String, TaskEntity> entry: taskList.entrySet()) {
+            entry.getValue().print(buffer, format);
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.gard.testbed.engine;
 
-import com.gard.testbed.engine.activities.Activity;
+import com.gard.testbed.engine.activities.ActivityOLD;
 import com.gard.testbed.helpers.ActivityFactory;
 import com.gard.testbed.statemachine.ActivityContext;
 import com.gard.testbed.statemachine.IngredientsTaskState;
@@ -11,8 +11,8 @@ import com.gard.testbed.statemachine.IngredientsTaskState;
 public class ActivityManager {
 
     // Hs current activity
-    private Activity activity;
-    // Activity context - current task state
+    private ActivityOLD activity;
+    // ActivityOLD context - current task state
     private ActivityContext activityContext = new ActivityContext(this);
 
     // Loads activity - for now parameterless set to load 'omelette collection' activity (two states only)
@@ -22,7 +22,7 @@ public class ActivityManager {
         activityContext.setState(new IngredientsTaskState(this, activityContext));
     }
 
-    public Activity getActivity(){return activity;}
+    public ActivityOLD getActivity(){return activity;}
 
     // Send event to state machine
     public void complete(String taskEntityName){
