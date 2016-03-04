@@ -1,7 +1,6 @@
 package com.gard.testbed.petrinet.logic;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Chris on 01/03/2016.
@@ -11,10 +10,12 @@ public class Petrinet
         extends PetrinetObject {
 
     private static final String nl = "\n";
-    List<Place> places              = new ArrayList<Place>();
-    List<Transition> transitions    = new ArrayList<Transition>();
-    List<Arc> arcs                  = new ArrayList<Arc>();
-    List<InhibitorArc> inhibitors   = new ArrayList<InhibitorArc>();
+    List<Place> places              = new ArrayList<>();
+    List<Transition> transitions    = new ArrayList<>();
+    List<Arc> arcs                  = new ArrayList<>();
+    List<InhibitorArc> inhibitors   = new ArrayList<>();
+    LinkedList<Token> activeTokens        = new LinkedList<>();    // All tokens active in Places in net
+    LinkedList<Token> tokenPool           = new LinkedList<>();    // Old tokens for recycling
 
     public Petrinet(String name) {
         super(name);
@@ -57,13 +58,13 @@ public class Petrinet
     }
 
     public Place place(String name) {
-        Place p = new Place(name);
+        Place p = new Place(name, this);
         places.add(p);
         return p;
     }
 
     public Place place(String name, int initial) {
-        Place p = new Place(name, initial);
+        Place p = new Place(name, initial, this);
         places.add(p);
         return p;
     }
@@ -98,6 +99,33 @@ public class Petrinet
         InhibitorArc i = new InhibitorArc(name, p, t);
         inhibitors.add(i);
         return i;
+    }
+
+    // Get a new active token - set place, add to activeTokens and return for use in Petri Net
+    public Token getActiveToken(Place place) {
+        Token token;
+        if (!tokenPool.isEmpty()) {
+            token = tokenPool.pop();
+        }else{
+            token = new Token();
+        }
+        token.setCurrentLocation(place);
+        activeTokens.push(token);
+        return token;
+    }
+
+    // Remove token from activeTokens to tokenPool
+    public boolean removeActiveToken(Token token) {
+        if (activeTokens.contains(token)) {
+            tokenPool.add(activeTokens.get(activeTokens.indexOf(token)));
+            activeTokens.remove(token);
+            return true;
+        }
+        return false;
+    }
+
+    public List<Token> getActiveTokenList(){
+        return activeTokens;
     }
 
     @Override

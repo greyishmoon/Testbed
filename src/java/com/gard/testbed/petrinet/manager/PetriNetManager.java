@@ -1,18 +1,56 @@
 package com.gard.testbed.petrinet.manager;
 
+import com.gard.testbed.helpers.ActivityFactory;
 import com.gard.testbed.petrinet.logic.Petrinet;
-import com.gard.testbed.petrinet.logic.ProgressToken;
+import com.gard.testbed.petrinet.logic.Token;
+import com.gard.testbed.petrinet.logic.Transition;
 
 import java.util.List;
+
 
 /**
  * Created by Chris on 02/03/2016.
  */
 public class PetriNetManager {
 
-    private static Petrinet activityMap;        // Petri Net of activity
-    List<ProgressToken> progressTokens;         // All tokens active in Places in net
-    List<ProgressToken> tokenPool;              // Old tokens for recycling
+    private static Petrinet activity;        // Petri Net of activity
+
+    public static void main(String[] args) {
+        activity = ActivityFactory.newTestOmelettePetrinet();
+//        System.out.println(activity.toString());
+
+        List<Transition> transitions = activity.getTransitionsAbleToFire();
+
+        for (int i = 0; i < transitions.size(); i++) {
+            Transition transition =  transitions.get(i);
+            System.out.println(transition);
+        }
+
+        List<Token> tokens = activity.getActiveTokenList();
+
+        for (int i = 0; i < tokens.size(); i++) {
+            Token token =  tokens.get(i);
+            System.out.println(token);
+        }
+
+        transitions.get(0).fire();
+
+        transitions = activity.getTransitionsAbleToFire();
+
+        for (int i = 0; i < transitions.size(); i++) {
+            Transition transition =  transitions.get(i);
+            System.out.println(transition);
+        }
+
+        tokens = activity.getActiveTokenList();
+
+        for (int i = 0; i < tokens.size(); i++) {
+            Token token =  tokens.get(i);
+            System.out.println(token);
+        }
+
+
+    }
 
 
 

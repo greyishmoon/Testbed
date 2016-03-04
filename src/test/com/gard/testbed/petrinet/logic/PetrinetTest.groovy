@@ -41,11 +41,11 @@ class PetrinetTest extends GroovyTestCase {
         assertTrue(t1.canFire());
         assertFalse(t2.canFire());
 
-        t1.fire();        assertEquals(1, p1.getTokens());
+        t1.fire();        assertEquals(1, p1.getTokenCount());
 
         System.out.println(pn);
 
-        assertEquals(2, p2.getTokens());
+        assertEquals(2, p2.getTokenCount());
 
         assertTrue(t1.canFire());
         assertTrue(t2.canFire());
