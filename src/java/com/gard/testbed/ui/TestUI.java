@@ -8,13 +8,13 @@ import java.util.Scanner;
  * Created by Chris on 14/02/2016..
  */
 
-public class TestUi {
+public class TestUI {
     // Store activityManager to send events
     ActivityManager activityManager;
     Scanner scanner = new Scanner(System.in);
     boolean retry = true;
 
-    public TestUi(ActivityManager activityManager) {
+    public TestUI(ActivityManager activityManager) {
         this.activityManager = activityManager;
     }
 

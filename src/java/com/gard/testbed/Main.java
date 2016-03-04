@@ -1,7 +1,7 @@
 package com.gard.testbed;
 
 import com.gard.testbed.engine.ActivityManager;
-import com.gard.testbed.ui.TestUi;
+import com.gard.testbed.ui.TestUI;
 
 public class Main {
 
@@ -10,7 +10,7 @@ public class Main {
         ActivityManager kernel = new ActivityManager();
 
         // Test console interaction
-        TestUi testUI = new TestUi(kernel);
+        TestUI testUI = new TestUI(kernel);
         testUI.run();
 
 
