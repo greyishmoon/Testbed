@@ -9,65 +9,45 @@ import java.util.List;
 public class Place
         extends PetrinetObject {
 
-    // Sets no limits on number of tokens this place can hold - default setting
+    /** Sets no limits on number of tokens this place can hold - default setting */
     public static final int UNLIMITED = -1;
 
-    private Petrinet parentPN;
-
-//    private int tokens = 0;
-    private LinkedList<Token> tokens = new LinkedList<>();
+    private int tokens = 0;
     private int maxTokens = UNLIMITED;
 
 
-    protected Place(String name, Petrinet pn) {
+    protected Place(String name) {
         super(name);
-        parentPN = pn;
     }
 
-    protected Place(String name, int initial, Petrinet pn) {
-        this(name, pn);
-        parentPN = pn;
-        // Add initial tokens
-        addTokens(initial);
-//        this.tokens = initial;
+    protected Place(String name, int initial) {
+        this(name);
+        this.tokens = initial;
     }
 
-    /**
-     * Checks if place holds required number of tokens
-     */
+    /** Checks if place holds required number of tokens */
     public boolean hasAtLeastTokens(int threshold) {
-        return (tokens.size() >= threshold);
+        return (tokens >= threshold);
     }
 
-    /**
-     * Manages maximum number of tokens
-     */
+    /** Manages maximum number of tokens */
     public boolean maxTokensReached(int newTokens) {
         if (hasUnlimitedMaxTokens()) {
             return false;
         }
-
-        return (tokens.size() + newTokens > maxTokens);
+        return (tokens + newTokens > maxTokens);
     }
 
     private boolean hasUnlimitedMaxTokens() {
         return maxTokens == UNLIMITED;
     }
 
-
-    public List<Token> getTokens() {
+    public int getTokens() {
         return tokens;
     }
 
-    public int getTokenCount() { return tokens.size(); }
-
-    public void setTokens(int newTokens) {
-        // Clear tokens list
-        removeTokens(tokens.size());
-        // Add new tokens
-        addTokens(newTokens);
-
-//        this.tokens = tokens;
+    public void setTokens(int tokens) {
+        this.tokens = tokens;
     }
 
     public void setMaxTokens(int max) {
@@ -75,24 +55,18 @@ public class Place
     }
 
     public void addTokens(int weight) {
-        for (int i = 0; i < weight; i++) {
-            tokens.add(parentPN.getActiveToken(this));
-        }
-//        this.tokens += weight;
-        System.out.println("ADDTOKENS in: " + getName());
+        this.tokens += weight;
     }
 
     public void removeTokens(int weight) {
-        parentPN.removeActiveToken(tokens.pop());
-//        this.tokens -= weight;
-        System.out.println("REMOVETOKENS in: " + getName());
+        this.tokens -= weight;
     }
 
 
     @Override
     public String toString() {
         return super.toString() +
-                " Tokens=" + this.getTokenCount() +
+                " Tokens=" + this.tokens +
                 " max=" + (hasUnlimitedMaxTokens() ? "unlimited" : this.maxTokens);
     }
 }

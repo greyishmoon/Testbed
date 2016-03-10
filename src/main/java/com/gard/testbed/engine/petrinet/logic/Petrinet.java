@@ -34,7 +34,7 @@ public class Petrinet
     }
 
     public List<Transition> getTransitionsAbleToFire() {
-        ArrayList<Transition> list = new ArrayList<Transition>();
+        ArrayList<Transition> list = new ArrayList<>();
         for (Transition t : transitions) {
             if (t.canFire()) {
                 list.add(t);
@@ -58,13 +58,13 @@ public class Petrinet
     }
 
     public Place place(String name) {
-        Place p = new Place(name, this);
+        Place p = new Place(name);
         places.add(p);
         return p;
     }
 
     public Place place(String name, int initial) {
-        Place p = new Place(name, initial, this);
+        Place p = new Place(name, initial);
         places.add(p);
         return p;
     }

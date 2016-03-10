@@ -18,7 +18,7 @@ public class InhibitorArc
 
     @Override
     public boolean canFire() {
-        return (place.getTokenCount() < this.getWeight());
+        return (place.getTokens() < this.getWeight());
     }
 
     /**
