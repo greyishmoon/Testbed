@@ -1,18 +1,19 @@
-package com.gard.testbed.engine.EventBus;
+package com.gard.testbed.engine.eventBus.test;
 
 import com.gard.testbed.abstractions.IEvent;
+import com.gard.testbed.engine.EventBus;
 import rx.Subscription;
 import rx.functions.Action1;
 
 /**
  * Created by Chris on 06/03/2016..
  */
-public class ObserveAll {
+public class ObserveAllTest {
 
     private EventBus eventBus;
     private Subscription subscription;
 
-    public ObserveAll(EventBus eventBus) {
+    public ObserveAllTest(EventBus eventBus) {
         this.eventBus = eventBus;
         subscription = eventBus.observe().subscribe(new Action1<IEvent>() {
             @Override
@@ -23,7 +24,7 @@ public class ObserveAll {
     }
 
     private void eventHandler(IEvent event) {
-        System.out.println("ALL event handler: " + event.getName());
+        System.out.println("ALL event handler: " + event.getTarget());
     }
 
 

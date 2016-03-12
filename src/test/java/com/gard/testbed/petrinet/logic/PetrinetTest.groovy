@@ -1,10 +1,10 @@
 package com.gard.testbed.petrinet.logic
 
-import com.gard.testbed.engine.petrinet.logic.Arc
-import com.gard.testbed.engine.petrinet.logic.InhibitorArc
-import com.gard.testbed.engine.petrinet.logic.Petrinet
-import com.gard.testbed.engine.petrinet.logic.Place
-import com.gard.testbed.engine.petrinet.logic.Transition
+import com.gard.testbed.engine.petrinet.Arc
+import com.gard.testbed.engine.petrinet.InhibitorArc
+import com.gard.testbed.engine.petrinet.Petrinet
+import com.gard.testbed.engine.petrinet.Place
+import com.gard.testbed.engine.petrinet.Transition
 
 /**
  * Created by Chris on 08/03/2016..
@@ -45,11 +45,11 @@ class PetrinetTest extends GroovyTestCase {
         assertTrue(t1.canFire());
         assertFalse(t2.canFire());
 
-        t1.fire();        assertEquals(1, p1.getTokenCount());
+        t1.fire();        assertEquals(1, p1.getTokens());
 
         System.out.println(pn);
 
-        assertEquals(2, p2.getTokenCount());
+        assertEquals(2, p2.getTokens());
 
         assertTrue(t1.canFire());
         assertTrue(t2.canFire());

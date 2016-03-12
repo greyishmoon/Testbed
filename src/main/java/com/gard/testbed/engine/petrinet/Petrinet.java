@@ -1,4 +1,4 @@
-package com.gard.testbed.engine.petrinet.logic;
+package com.gard.testbed.engine.petrinet;
 
 import java.util.*;
 
@@ -9,13 +9,13 @@ import java.util.*;
 public class Petrinet
         extends PetrinetObject {
 
-    private static final String nl = "\n";
-    List<Place> places              = new ArrayList<>();
-    List<Transition> transitions    = new ArrayList<>();
-    List<Arc> arcs                  = new ArrayList<>();
-    List<InhibitorArc> inhibitors   = new ArrayList<>();
-    LinkedList<Token> activeTokens        = new LinkedList<>();    // All tokens active in Places in net
-    LinkedList<Token> tokenPool           = new LinkedList<>();    // Old tokens for recycling
+    private static final String nl      = "\n";
+    List<Place> places                  = new ArrayList<>();
+    List<Transition> transitions        = new ArrayList<>();
+    List<Arc> arcs                      = new ArrayList<>();
+    List<InhibitorArc> inhibitors       = new ArrayList<>();
+//    LinkedList<Token> activeTokens      = new LinkedList<>();    // All tokens active in Places in net
+//    LinkedList<Token> tokenPool         = new LinkedList<>();    // Old tokens for recycling
 
     public Petrinet(String name) {
         super(name);
@@ -51,9 +51,9 @@ public class Petrinet
 
     public void fullTransition(String name, Place source, int sourceWeight,
                           Place destination, int destinationWeight) {
-        Transition t = this.transition(name);
-        Arc a1 = this.arc(name + "_arc_in", source, t, sourceWeight);
-        Arc a2 = this.arc(name + "_arc_out", t, destination, destinationWeight);
+        Transition transition = this.transition(name);
+        Arc a1 = this.arc(name + "_arc_in", source, transition, sourceWeight);
+        Arc a2 = this.arc(name + "_arc_out", transition, destination, destinationWeight);
 
     }
 
@@ -99,33 +99,6 @@ public class Petrinet
         InhibitorArc i = new InhibitorArc(name, p, t);
         inhibitors.add(i);
         return i;
-    }
-
-    // Get a new active token - set place, add to activeTokens and return for use in Petri Net
-    public Token getActiveToken(Place place) {
-        Token token;
-        if (!tokenPool.isEmpty()) {
-            token = tokenPool.pop();
-        }else{
-            token = new Token();
-        }
-        token.setCurrentLocation(place);
-        activeTokens.push(token);
-        return token;
-    }
-
-    // Remove token from activeTokens to tokenPool
-    public boolean removeActiveToken(Token token) {
-        if (activeTokens.contains(token)) {
-            tokenPool.add(activeTokens.get(activeTokens.indexOf(token)));
-            activeTokens.remove(token);
-            return true;
-        }
-        return false;
-    }
-
-    public List<Token> getActiveTokenList(){
-        return activeTokens;
     }
 
     @Override

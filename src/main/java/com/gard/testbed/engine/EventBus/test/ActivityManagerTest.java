@@ -1,6 +1,9 @@
-package com.gard.testbed.engine.EventBus;
+package com.gard.testbed.engine.eventBus.test;
 
 import com.gard.testbed.abstractions.IEvent;
+import com.gard.testbed.engine.EventBus;
+import com.gard.testbed.engine.eventBus.events.ActivityEvent;
+import com.gard.testbed.engine.eventBus.events.MessageType;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -9,12 +12,12 @@ import rx.functions.Action1;
  *
  * Mock-up of ActivityManager - manages PetriNets and recording progression through activity
  */
-public class ActivityManager {
+public class ActivityManagerTest {
 
     private EventBus<IEvent> eventBus;
     private Subscription subscription;
 
-    public ActivityManager(EventBus<IEvent> eventBus) {
+    public ActivityManagerTest(EventBus<IEvent> eventBus) {
         this.eventBus = eventBus;
         subscription = eventBus.observeEvents(ActivityEvent.class).subscribe(new Action1<IEvent>() {
             @Override
@@ -26,11 +29,11 @@ public class ActivityManager {
 
 
     private void eventHandler(ActivityEvent event) {
-        System.out.println("AM event handler: " + event.getName() + " MSG: " + event.getActivityM());
+        System.out.println("AM event handler: " + event.getTarget() + " MSG: " + event.getMessage());
     }
 
-    public void postEventTest(String name, String message) {
-        eventBus.post(new EngagementEvent(name, message));
+    public void postEvent(String name, MessageType type, String message) {
+        eventBus.post(new ActivityEvent(name, type, message));
     }
 
     public void unsuscribe() {

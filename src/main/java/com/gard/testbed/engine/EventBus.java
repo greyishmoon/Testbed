@@ -1,4 +1,4 @@
-package com.gard.testbed.engine.EventBus;
+package com.gard.testbed.engine;
 
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -8,6 +8,9 @@ import rx.subjects.Subject;
 
 /**
  * Created by Chris on 06/03/2016..
+ * RxJava Event Bus - handles all events for system
+ * Observers subscribe to listen for events (to listen for specific eventssubscribe with observeEvents(Class<E> eventClass))
+ * Event generators post all events to this bus
  */
 public class EventBus<T> {
 
@@ -43,9 +46,9 @@ public class EventBus<T> {
         return subject;
     }
 
-
+    //pass only events of specified type, filter all other
     public <E extends T> Observable<E> observeEvents(Class<E> eventClass) {
-        return subject.ofType(eventClass);//pass only events of specified type, filter all other
+        return subject.ofType(eventClass);
     }
 
 }

@@ -1,7 +1,4 @@
-package com.gard.testbed.engine.petrinet.logic;
-
-import java.util.LinkedList;
-import java.util.List;
+package com.gard.testbed.engine.petrinet;
 
 /**
  * Created by Chris on 01/03/2016.

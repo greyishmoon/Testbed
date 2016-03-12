@@ -1,4 +1,8 @@
-package com.gard.testbed.engine.petrinet.logic;
+package com.gard.testbed.engine.petrinet;
+
+import com.gard.testbed.engine.Kernel;
+import com.gard.testbed.engine.eventBus.events.ActivityEvent;
+import com.gard.testbed.engine.eventBus.events.MessageType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +17,14 @@ public class Transition
         super(name);
     }
 
-    private List<Arc> incoming = new ArrayList<Arc>();
-    private List<Arc> outgoing = new ArrayList<Arc>();
+    private List<Arc> incoming = new ArrayList<>();
+    private List<Arc> outgoing = new ArrayList<>();
 
     /**
-     * @return if transition can fire
+     * True if transition can fire (requiring all its arcs to be fireable)
      */
     public boolean canFire() {
-        boolean canFire = true;
+        boolean canFire;
 
         // detects if no edges
         canFire = ! this.isNotConnected();
@@ -38,7 +42,7 @@ public class Transition
     /**
      * Triggers transition
      */
-    public void fire() {
+    public boolean fire() {
         for (Arc arc : incoming) {
             arc.fire();
         }
@@ -46,6 +50,21 @@ public class Transition
         for (Arc arc : outgoing) {
             arc.fire();
         }
+
+        // Post ActivityEvent indicating transition fired and action completed successfully
+        postCompletedEvent();
+
+        return true;
+    }
+
+    private void postEvent(String target, MessageType type, String message) {
+        Kernel.getEventBus().post(new ActivityEvent(target, type, message));
+    }
+
+    // Post completed event with this.name as target
+    // TODO - check this should be posted from here - or should Activity Manager have sole responsibility for posting ActivityEvent's
+    private void postCompletedEvent() {
+        postEvent(this.getName(), MessageType.COMPLETED, "Transition fired and completed");
     }
 
     /**

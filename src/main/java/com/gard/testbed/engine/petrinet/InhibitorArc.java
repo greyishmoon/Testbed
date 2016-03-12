@@ -1,4 +1,4 @@
-package com.gard.testbed.engine.petrinet.logic;
+package com.gard.testbed.engine.petrinet;
 
 /**
  * Created by Chris on 01/03/2016.

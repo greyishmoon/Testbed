@@ -1,14 +1,60 @@
 package com.gard.testbed.helpers;
 
-import com.gard.testbed.engine.petrinet.logic.Petrinet;
-import com.gard.testbed.engine.petrinet.logic.Place;
-import com.gard.testbed.engine.petrinet.logic.Transition;
+import com.gard.testbed.engine.petrinet.Petrinet;
+import com.gard.testbed.engine.petrinet.Place;
+import com.gard.testbed.engine.petrinet.Transition;
 
 /**
  * Created by Chris on 15/02/2016..
  */
 
 public class ActivityFactory {
+
+    /** Creates a simple PN for testing
+     * Structure =
+     *                      Element 1
+     *                    /           \
+     *                 --              \
+     *               /    \             \
+     * Start - Task 1       Element 2 ------ Task 2 - End
+     *               \                     /
+     *                --------------------
+
+     */
+    public static Petrinet newTestSimplePetrinet() {
+        Petrinet activity = new Petrinet("Simple");
+        Place p1 = activity.place("Start", 1);
+        Place p2 = activity.place("Task 1");
+        Place p3 = activity.place("Element 1");
+        Place p4 = activity.place("Element 2");
+        Place p5 = activity.place("Task 2");
+        Place p6 = activity.place("End");
+
+        // Start to Task1
+        activity.fullTransition("Start", p1, 1, p2, 1);
+
+        // BRANCH 1 - Task1 direct to Task 2
+        activity.fullTransition("Task 1", p2, 1, p5, 2);    // output 2 tokens to Task 2 to cater for synchronisation
+
+        // BRANCH 2 - Task1 split to 2 subtasks
+        Transition tr2 = activity.transition("Task 1 subtasks");
+            // Arc Task 1 to Task 1 subtasks
+            activity.arc("t1 to st", p2, tr2);
+            // Arc Task 1 subtasks to Element 1
+            activity.arc("st to e1", tr2, p3);
+            // Arc Task 1 subtasks to Element 2
+            activity.arc("st to e2", tr2, p4);
+
+        // SYNCHRONISE - 2 subtasks to task 2 - (2 completed subtasks will result in 2 tokens in Task 2)
+        // Element 1 to Task 2
+        activity.fullTransition("Element 1", p3, 1, p5, 1);
+        activity.fullTransition("Element 2", p4, 1, p5, 1);
+
+        // Task 2 to End
+        activity.fullTransition("Task 2", p5, 2, p6, 1);    // Task 2 transition only live with 2 tokens - caters for synchronisation
+
+        return activity;
+    }
 
     public static Petrinet newTestOmelettePetrinet() {
         Petrinet activity = new Petrinet("Omelette");
