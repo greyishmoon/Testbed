@@ -1,8 +1,8 @@
 package com.gard.testbed.engine.petrinet;
 
 import com.gard.testbed.engine.Kernel;
-import com.gard.testbed.engine.eventBusx.events.ActivityEvent;
-import com.gard.testbed.engine.eventBusx.events.MessageType;
+import com.gard.testbed.engine.eventBus.events.ActivityEvent;
+import com.gard.testbed.engine.eventBus.events.MessageType;
 
 import java.util.ArrayList;
 import java.util.List;

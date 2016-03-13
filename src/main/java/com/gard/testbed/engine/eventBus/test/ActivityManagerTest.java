@@ -1,9 +1,9 @@
-package com.gard.testbed.engine.eventBusx.test;
+package com.gard.testbed.engine.eventBus.test;
 
 import com.gard.testbed.abstractions.IEvent;
 import com.gard.testbed.engine.EventBus;
-import com.gard.testbed.engine.eventBusx.events.ActivityEvent;
-import com.gard.testbed.engine.eventBusx.events.MessageType;
+import com.gard.testbed.engine.eventBus.events.ActivityEvent;
+import com.gard.testbed.engine.eventBus.events.MessageType;
 import rx.Subscription;
 import rx.functions.Action1;
 

@@ -1,4 +1,4 @@
-package com.gard.testbed.engine.eventBusx.events;
+package com.gard.testbed.engine.eventBus.events;
 
 
 /**
