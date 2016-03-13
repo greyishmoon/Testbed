@@ -2,9 +2,9 @@ package com.gard.testbed.ui;
 
 import com.gard.testbed.abstractions.IEvent;
 import com.gard.testbed.engine.EventBus;
-import com.gard.testbed.engine.eventBus.events.ActivityEvent;
-import com.gard.testbed.engine.eventBus.events.MessageType;
-import com.gard.testbed.engine.eventBus.events.UiEvent;
+import com.gard.testbed.engine.eventBusx.events.ActivityEvent;
+import com.gard.testbed.engine.eventBusx.events.MessageType;
+import com.gard.testbed.engine.eventBusx.events.UiEvent;
 import com.gard.testbed.engine.petrinet.Transition;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -31,7 +31,7 @@ public class TestUI {
 
     public void run(){
         // Request initial status to set up initial options list
-        postEvent("EventBus", MessageType.GETSTATUS, "Request status update from ActivityManager");
+        postEvent("eventBusx", MessageType.GETSTATUS, "Request status update from ActivityManager");
     }
 
     // Handles all event this object is subscribed to receive
@@ -104,7 +104,7 @@ public class TestUI {
         eventBus.post(new UiEvent(transition.getName(), MessageType.COMPLETE, "Fire this transition"));
     }
 
-    // Subscribe to eventBus listening to specific event type
+    // Subscribe to eventBusx listening to specific event type
     public void subscribe(Class eventClass) {
         subscriptions.add(eventBus.observeEvents(eventClass).subscribe(new Action1<IEvent>() {
             @Override
@@ -114,7 +114,7 @@ public class TestUI {
         }));
     }
 
-    // Unsubscribe from eventBus for specified subscription
+    // Unsubscribe from eventBusx for specified subscription
     // TODO needs fixing - cant identify subscription using eventClass
     public void unsubscribe(Class eventClass) {
 //        for (Iterator<Subscription> iterator = subscriptions.iterator(); iterator.hasNext();) {
