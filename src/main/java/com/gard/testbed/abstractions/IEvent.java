@@ -1,6 +1,6 @@
 package com.gard.testbed.abstractions;
 
-import com.gard.testbed.engine.eventBus.events.MessageType;
+import com.gard.testbed.engine.eventBusx.events.MessageType;
 
 /**
  * Created by Chris on 06/03/2016..

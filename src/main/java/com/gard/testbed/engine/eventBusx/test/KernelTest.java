@@ -1,10 +1,10 @@
-package com.gard.testbed.engine.eventBus.test;
+package com.gard.testbed.engine.eventBusx.test;
 
 
 import com.gard.testbed.abstractions.IEvent;
 import com.gard.testbed.engine.EventBus;
-import com.gard.testbed.engine.eventBus.events.ActivityEvent;
-import com.gard.testbed.engine.eventBus.events.MessageType;
+import com.gard.testbed.engine.eventBusx.events.ActivityEvent;
+import com.gard.testbed.engine.eventBusx.events.MessageType;
 
 /**
  * Created by Chris on 06/03/2016..
@@ -21,7 +21,7 @@ public class KernelTest {
 
 //        Subscription mSubscription;
 
-//        mSubscription = eventBus.observe().subscribe(new Action1<IEvent>() {
+//        mSubscription = eventBusx.observe().subscribe(new Action1<IEvent>() {
 //            @Override
 //            public void call(IEvent e) {
 //                System.out.println(e.getTarget());

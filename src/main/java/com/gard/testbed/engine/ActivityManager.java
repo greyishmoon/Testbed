@@ -1,8 +1,8 @@
 package com.gard.testbed.engine;
 
 import com.gard.testbed.abstractions.IEvent;
-import com.gard.testbed.engine.eventBus.events.ActivityEvent;
-import com.gard.testbed.engine.eventBus.events.MessageType;
+import com.gard.testbed.engine.eventBusx.events.ActivityEvent;
+import com.gard.testbed.engine.eventBusx.events.MessageType;
 import com.gard.testbed.engine.petrinet.Petrinet;
 import com.gard.testbed.engine.petrinet.PetrinetException;
 import com.gard.testbed.engine.petrinet.Transition;
@@ -72,7 +72,7 @@ public class ActivityManager {
                 activity.getTransitionsAbleToFire()));
     }
 
-    // Subscribe to eventBus listening to specific event type
+    // Subscribe to eventBusx listening to specific event type
     public void subscribe(Class eventClass) {
         subscriptions.add(eventBus.observeEvents(eventClass).subscribe(new Action1<IEvent>() {
             @Override
@@ -82,7 +82,7 @@ public class ActivityManager {
         }));
     }
 
-    // Unsubscribe from eventBus for specified subscription
+    // Unsubscribe from eventBusx for specified subscription
     // TODO needs fixing - cant identify subscription using eventClass
     public void unsubscribe(Class eventClass) {
 //        for (Iterator<Subscription> iterator = subscriptions.iterator(); iterator.hasNext();) {

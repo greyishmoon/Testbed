@@ -1,8 +1,8 @@
 package com.gard.testbed.engine;
 
 import com.gard.testbed.abstractions.IEvent;
-import com.gard.testbed.engine.eventBus.events.ActivityEvent;
-import com.gard.testbed.engine.eventBus.events.UiEvent;
+import com.gard.testbed.engine.eventBusx.events.ActivityEvent;
+import com.gard.testbed.engine.eventBusx.events.UiEvent;
 import com.gard.testbed.ui.TestUI;
 
 /**
@@ -20,7 +20,7 @@ public class Kernel {
         return kernelInstance;
     }
 
-    // Returns instance of eventBus - provides all event producers with access
+    // Returns instance of eventBusx - provides all event producers with access
     public static EventBus<IEvent> getEventBus(){
         return eventBus;}
 
@@ -28,9 +28,9 @@ public class Kernel {
     }
 
     public void initialise() {
-        // Subscribe activity manager to eventBus to listen for UI events
+        // Subscribe activity manager to eventBusx to listen for UI events
         activityManager.subscribe(UiEvent.class);
-        // Subscribe UI to eventBus to listen for Activity events
+        // Subscribe UI to eventBusx to listen for Activity events
         testUi.subscribe(ActivityEvent.class);
     }
 

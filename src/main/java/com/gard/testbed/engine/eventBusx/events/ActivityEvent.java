@@ -1,4 +1,4 @@
-package com.gard.testbed.engine.eventBus.events;
+package com.gard.testbed.engine.eventBusx.events;
 
 
 import com.gard.testbed.engine.petrinet.Transition;

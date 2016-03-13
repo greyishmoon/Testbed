@@ -1,4 +1,4 @@
-package com.gard.testbed.engine.eventBus.test;
+package com.gard.testbed.engine.eventBusx.test;
 
 import com.gard.testbed.abstractions.IEvent;
 import com.gard.testbed.engine.EventBus;

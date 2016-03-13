@@ -1,4 +1,4 @@
-package com.gard.testbed.engine.eventBus.events;
+package com.gard.testbed.engine.eventBusx.events;
 
 /**
  * Created by Chris on 11/03/2016..
