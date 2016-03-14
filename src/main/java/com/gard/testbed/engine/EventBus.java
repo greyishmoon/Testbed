@@ -25,7 +25,7 @@ public class EventBus<T> {
     }
 
     public static <T> EventBus<T> createWithLatest() {
-        return new EventBus<>(BehaviorSubject.<T>create());
+         return new EventBus<>(BehaviorSubject.<T>create());
     }
 
 
