@@ -55,7 +55,6 @@ public class ActivityManager {
     private synchronized void fireTransition(IEvent event) throws PetrinetException {
 
         // If target present in fireable transitions, fire it, if not throw exception
-        // TODO - find out if this can be simplified - ?? return value from transition.fire is bool, so how to use that as condition for if statement
         if (activity.getTransitionsAbleToFire().stream().anyMatch(transition -> transition.getName() == event.getTarget())) {
 
             activity.getTransitionsAbleToFire().stream().filter(transition -> transition.getName() == event.getTarget())
@@ -83,7 +82,6 @@ public class ActivityManager {
     }
 
     // Unsubscribe from eventBus for specified subscription
-    // TODO needs fixing - cant identify subscription using eventClass
     public void unsubscribe(Class eventClass) {
 //        for (Iterator<Subscription> iterator = subscriptions.iterator(); iterator.hasNext();) {
 //            Subscription subscription = iterator.next();

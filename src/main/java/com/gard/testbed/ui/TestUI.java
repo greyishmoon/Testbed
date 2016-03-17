@@ -115,7 +115,6 @@ public class TestUI {
     }
 
     // Unsubscribe from eventBus for specified subscription
-    // TODO needs fixing - cant identify subscription using eventClass
     public void unsubscribe(Class eventClass) {
 //        for (Iterator<Subscription> iterator = subscriptions.iterator(); iterator.hasNext();) {
 //            Subscription subscription = iterator.next();

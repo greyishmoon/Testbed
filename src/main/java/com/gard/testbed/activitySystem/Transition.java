@@ -1,24 +1,26 @@
 package com.gard.testbed.activitySystem;
 
+import rx.Subscription;
+
 import java.util.function.Predicate;
 
 /**
  * Created by va922kg on 3/15/16.
  */
 public class Transition implements ITransition {
-    private final String src;
-    private final String dst;
+    private final String source;
+    private final String destination;
     private final Predicate<IBlackboard> trigger;
 
-    public Transition(String src, String dst, Predicate<IBlackboard> trigger) {
-        this.src = src;
-        this.dst = dst;
+    public Transition(String source, String destination, Predicate<IBlackboard> trigger) {
+        this.source = source;
+        this.destination = destination;
         this.trigger= trigger;
     }
 
     @Override
-    public String Src() {
-        return src;
+    public boolean isComplete(IBlackboard player) {
+        return trigger.test(player);
     }
 
     @Override
@@ -27,7 +29,14 @@ public class Transition implements ITransition {
     }
 
     @Override
-    public String Dst() {
-        return dst;
+    public String Source() {
+        return source;
     }
+
+    @Override
+    public String Destination() {
+        return destination;
+    }
+
+
 }

@@ -62,7 +62,6 @@ public class Transition
     }
 
     // Post completed event with this.name as target
-    // TODO - check this should be posted from here - or should Activity Manager have sole responsibility for posting ActivityEvent's
     private void postCompletedEvent() {
         postEvent(this.getName(), MessageType.COMPLETED, "Transition fired and completed");
     }

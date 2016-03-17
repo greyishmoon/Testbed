@@ -33,4 +33,17 @@ public class ActivityBuilder {
     public IActivity build() {
         return activity;
     }
+
+    public static IActivity generateLinearTestActivity() {
+        return ActivityBuilder.activity("Omelette").
+                addState("Task 1").
+                setInitialState("Task 1").
+                addTransition("Task 1", "Task 2", (b -> b.query("Task 1") >= 1)).   // 1 = task completed
+                addState("Task 2").
+                addTransition("Task 2", "Task 3", (b -> b.query("Task 2") >= 1)).
+                addState("Task 3").
+                addTransition("Task 3", "End", (b -> b.query("Task 3") >= 1)).
+                addState("End").                                                    // no transitions so isFinal
+                build();
+    }
 }

@@ -16,12 +16,23 @@ public class State implements IState {
     }
 
     @Override
-    public String getId() {
-        return id;
+    public boolean isCompleted(IBlackboard player) {
+        return transitions.stream().allMatch(e -> e.isComplete(player));
     }
+
+    @Override
+    public boolean isActive() {
+        return false;
+    }
+
     @Override
     public boolean isFinal() {
         return transitions.isEmpty();
+    }
+
+    @Override
+    public List<ITransition> getTransitions() {
+        return transitions;
     }
 
     @Override
@@ -30,7 +41,7 @@ public class State implements IState {
     }
 
     @Override
-    public List<ITransition> getTransitions() {
-        return transitions;
+    public String getId() {
+        return id;
     }
 }

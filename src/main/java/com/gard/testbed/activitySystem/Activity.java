@@ -51,6 +51,6 @@ public class Activity implements IActivity {
 
     @Override
     public void add(ITransition transition) {
-        this.states.get(transition.Src()).add(transition);
+        this.states.get(transition.Source()).add(transition);
     }
 }
