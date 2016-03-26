@@ -9,6 +9,8 @@ public interface IActivity {
     void setInitialState(String stateId);
     IState getInitialState();
 
+    void setSubTaskActivityTrue(String stateName);
+
     void getTransitionForState(String s);
     IState get(String stateId);
 

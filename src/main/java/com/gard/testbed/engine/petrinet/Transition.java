@@ -63,7 +63,7 @@ public class Transition
 
     // Post completed event with this.name as target
     private void postCompletedEvent() {
-        postEvent(this.getName(), MessageType.COMPLETED, "Transition fired and completed");
+        postEvent(this.getName(), MessageType.TASKCOMPLETED, "Transition fired and completed");
     }
 
     /**

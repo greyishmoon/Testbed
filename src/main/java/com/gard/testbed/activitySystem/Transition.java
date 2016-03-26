@@ -1,12 +1,12 @@
 package com.gard.testbed.activitySystem;
 
-import rx.Subscription;
 
 import java.util.function.Predicate;
 
 /**
- * Created by va922kg on 3/15/16.
+ * Links two states and holds goal test (trigger) for transition to fire
  */
+
 public class Transition implements ITransition {
     private final String source;
     private final String destination;
@@ -15,12 +15,19 @@ public class Transition implements ITransition {
     public Transition(String source, String destination, Predicate<IBlackboard> trigger) {
         this.source = source;
         this.destination = destination;
-        this.trigger= trigger;
+        this.trigger = trigger;
     }
 
     @Override
     public boolean isComplete(IBlackboard player) {
         return trigger.test(player);
+    }
+
+    @Override
+    public void onFire() {
+        // Add any behaviours required when transition fires
+        // TODO - remove println
+        System.out.println("Log: Transition " + source + " OnFire fired");
     }
 
     @Override
@@ -37,6 +44,4 @@ public class Transition implements ITransition {
     public String Destination() {
         return destination;
     }
-
-
 }

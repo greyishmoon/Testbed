@@ -1,27 +1,21 @@
 package com.gard.testbed.activitySystem;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by va922kg on 3/15/16.
- *
+ * <p>
  * Defines context and connections for all entities comprising the Activity System
  * ?? Named ActivityExecution in Activity System diagram ??
  */
 public class ActivitySystem {
 
-    // Activity runner - executes activity, updates blackboard and monitors blackboard
-    ActivityRunner activityRunner = null;
-    // Blackboard for player progress
-    IBlackboard player = null;
-    // Activity map
-    IActivity activity = null;
+    // Holds all Activity Maps currently loaded into system
+    private Map<String, IActivityMap> activityMapLibrary = new HashMap<String, IActivityMap>();
 
-
-    public void initialise(){
-        player = new Subject("Player 1");
-        activity = ActivityBuilder.generateLinearTestActivity();
-        activityRunner = new ActivityRunner();
-        player.register(activityRunner);
+    public void addActivityMap(IActivityMap newMap) {
+        activityMapLibrary.put(newMap.getId(), newMap);
     }
-
 
 }

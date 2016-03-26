@@ -17,7 +17,7 @@ public class ActivityTest {
     @Test
     public void createAnActivity() {
         // using builder to create an activity
-        IActivity act = ActivityBuilder.activity("Omelette").addState("1").
+        IActivity act = ActivityBuilder.activity("Omelette", 1).addState("1").
                 setInitialState("1").
                 addTransition("1","2",(b -> b.query("eggs") > 3)).
                 build();
@@ -30,7 +30,7 @@ public class ActivityTest {
     @Test
     public void testTriggerCondition() {
         IBlackboard player = new Subject("player");
-        IActivity act = ActivityBuilder.activity("Omelette").
+        IActivity act = ActivityBuilder.activity("Omelette", 1).
                 addState("1").
                 setInitialState("1").
                 addTransition("1","2",(b -> b.query("eggs") > 3)).
@@ -43,7 +43,7 @@ public class ActivityTest {
     @Test
     public void testSequentialTasks() {
         IBlackboard player = new Subject("player");
-        IActivity act = ActivityBuilder.activity("Omelette").
+        IActivity act = ActivityBuilder.activity("Omelette", 1).
                 addState("Task 1").
                 setInitialState("Task 1").
                 addTransition("Task 1","Task 2",(b -> b.query("Task 1") >= 1)).         // 1 = task completed
@@ -74,7 +74,7 @@ public class ActivityTest {
     @Test
     public void testConcurrentTasks() {
         IBlackboard player = new Subject("player");
-        IActivity act = ActivityBuilder.activity("Omelette").
+        IActivity act = ActivityBuilder.activity("Omelette", 1).
                 addState("Task 1").
                 setInitialState("Task 1").
                 // Task 1 branches to both Concurrent 1 and Concurrent 2
