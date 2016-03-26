@@ -7,11 +7,15 @@ package com.gard.testbed.engine.eventBus.events;
 public enum MessageType {
 
     // ActivityEvent types...
-    COMPLETED,          // Reports transition fired and completed
+    COMPLETETASK,       // Requests a live transition to be completed (target transition to be fired)
+    TASKCOMPLETED,      // Reports transition fired and completed
+    LOADSUBTASK,        // Request to load sub-task activity of current state IF there is one present
     STATUS,             // Reports PN current status with list of active Transitions (ready to fire)
 
+    // Blackboard types...
+    UPDATED,            // Reports Blackboard's state has changed
+
     // UiEvent types...
-    COMPLETE,           // Requests a live transition to be completed (target transition to be fired)
     GETSTATUS,          // Requests status update
 
 }

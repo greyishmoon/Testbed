@@ -4,28 +4,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by va922kg on 3/15/16.
+ * Map of activity consisting of consisting of map of states linked by transitions.
  */
 public class Activity implements IActivity {
 
-    private Map<String,IState> states = new HashMap<String, IState>();
-    private String initialStateId;
+    // Activity name
     private String id;
 
-    protected Activity(String id) {
-        this.id = id;
-    }
+    // Activity level - 1 denotes top level goal tasks, with 2 > representing nested subtasks
+    private int level;
 
+    // Map of states for this activity level
+    private Map<String, IState> states = new HashMap<String, IState>();
+    // Starting state for activity
+    private String initialStateId;
+
+    protected Activity(String id, int level) {
+        this.id = id;
+        this.level = level;
+    }
 
     @Override
     public IState get(String stateId) {
         return states.get(stateId);
     }
 
-
     @Override
     public void add(IState state) {
         this.states.put(state.getId(), state);
+    }
+
+    @Override
+    public void add(ITransition transition) {
+        this.states.get(transition.Source()).add(transition);
     }
 
     @Override
@@ -39,8 +50,12 @@ public class Activity implements IActivity {
     }
 
     @Override
-    public void getTransitionForState(String s) {
+    public void setSubTaskActivityTrue(String stateName) {
+        this.states.get(stateName).setSubTaskActivityTrue();
+    }
 
+    @Override
+    public void getTransitionForState(String s) {
     }
 
     @Override
@@ -48,9 +63,7 @@ public class Activity implements IActivity {
         return this.id;
     }
 
-
-    @Override
-    public void add(ITransition transition) {
-        this.states.get(transition.Src()).add(transition);
+    public int getLevel() {
+        return level;
     }
 }

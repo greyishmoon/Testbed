@@ -1,8 +1,14 @@
-version '1.0'
+plugins {
+    id 'java' // or 'groovy' Must be explicitly applied
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
 
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+version '1.0'
 
 mainClassName = "com.gard.testbed.Main"
 
@@ -17,8 +23,11 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'org.codehaus.groovy:groovy-all:2.4.2'
     compile 'org.codehaus.groovy:groovy-test:2.4.2'
+    compile 'com.google.guava:guava:19.0' // guava for eventbus
 }
 
+// Deal with console input problem
+// Note - does not work using Intellij Gradle plugin Application.run
 run {
     standardInput = System.in
 }
@@ -27,7 +36,7 @@ jar {
     manifest {
         attributes(
                 'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'com.gard.testbed.Main'
+                'Main-Class': mainClassName
         )
     }
 }

@@ -8,11 +8,12 @@ import java.util.function.Predicate;
 public class ActivityBuilder {
     private IActivity activity;
 
-    public static ActivityBuilder activity(String id){
-        return new ActivityBuilder(id);
+    public static ActivityBuilder activity(String id, int level) {
+        return new ActivityBuilder(id, level);
     }
-    private ActivityBuilder(String id) {
-        this.activity = new Activity(id);
+
+    private ActivityBuilder(String id, int level) {
+        this.activity = new Activity(id, level);
     }
 
     public ActivityBuilder addState(String stateId) {
@@ -21,16 +22,22 @@ public class ActivityBuilder {
     }
 
     public ActivityBuilder setInitialState(String stateId) {
-        activity.setInitialState( stateId);
+        activity.setInitialState(stateId);
+        return this;
+    }
+
+    public ActivityBuilder setSubTaskActivityTrue(String stateName) {
+        activity.setSubTaskActivityTrue(stateName);
         return this;
     }
 
     public ActivityBuilder addTransition(String src, String dst, Predicate<IBlackboard> trigger) {
-        activity.add( new Transition(src,  dst,  trigger));
+        activity.add(new Transition(src, dst, trigger));
         return this;
     }
 
     public IActivity build() {
         return activity;
     }
+
 }
